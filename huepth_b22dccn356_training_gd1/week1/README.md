@@ -43,13 +43,15 @@
 - <img width="386" height="81" alt="image" src="https://github.com/user-attachments/assets/c668e9b9-cbc7-414e-bf5c-0956ce3d1eaf" />
 - **Thiết lập SSH**
 
-<img width="615" height="221" alt="image" src="https://github.com/user-attachments/assets/9057caac-dd67-4218-b812-3aa9a4e2d871" />
+- <img width="615" height="221" alt="image" src="https://github.com/user-attachments/assets/9057caac-dd67-4218-b812-3aa9a4e2d871" />
+
 # <a name="_2nd8t5rt1k6q"></a>**Phần 2: Làm việc với repository**
 1. ## <a name="_x83k4ognrhpm"></a>**Khởi tạo và clone repository**
 <img width="239" height="52" alt="image" src="https://github.com/user-attachments/assets/e24be121-9cfe-4dea-a921-cdd9fb5bc682" />
 
 - Khởi tạo một kho lưu trữ Git hoàn toàn mới và bắt đầu theo dõi một thư mục hiện có. Lệnh này sẽ thêm một thư mục ẩn .git trong thư mục hiện có, chứa cấu trúc dữ liệu nội bộ cần thiết cho việc kiểm soát phiên bản.
-<img width="523" height="34" alt="image" src="https://github.com/user-attachments/assets/522847d3-0e08-4a0d-88b0-f817ec897c69" />
+- <img width="523" height="34" alt="image" src="https://github.com/user-attachments/assets/522847d3-0e08-4a0d-88b0-f817ec897c69" />
+
 - Tạo một bản sao cục bộ của một dự án đã tồn tại từ xa. Bản sao này bao gồm tất cả các tệp, lịch sử và nhánh của dự án.
 - Cấu trúc thư mục .git: thư mục .git chứa thông tin chi tiết về từng thay đổi được thực hiện đối với repository.
 + HEAD: trỏ đến commit hiện tại.
@@ -66,24 +68,29 @@
 
 <img width="603" height="418" alt="image" src="https://github.com/user-attachments/assets/47f4dd52-6da8-4a50-9da2-eb33b5bee4cd" />
 <img width="645" height="208" alt="image" src="https://github.com/user-attachments/assets/c3056c66-0b10-4ffb-bc96-ae08e7ba1a5c" />
+
 3. ## <a name="_13r5o3eo5yti"></a>**Thêm và commit thay đổi**
 - git add: git add <file> / git add .
   Chuyển các thay đổi từ modified sang staged
   Chuẩn bị 1 snapshot của các thay đổi muốn đưa vào commit tiếp theo.
 - git commit: git commit -m "first commit"
   Lưu trữ các thay đổi đang ở trạng thái staged vào lịch sử Git (trạng thái committed) với một message mô tả.
-  <img width="610" height="527" alt="image" src="https://github.com/user-attachments/assets/d1e83315-d7a0-4a90-aae4-f884f141925c" />
+
+- <img width="610" height="527" alt="image" src="https://github.com/user-attachments/assets/d1e83315-d7a0-4a90-aae4-f884f141925c" />
 
 # <a name="_o7g66vkqoz6b"></a>**Phần 3: Làm việc với lịch sử và phiên bản**
 1. Xem lịch sử commit
 - git log, git show, git blame
 + git log: Hiển thị danh sách các commit theo thứ tự thời gian.
-<img width="460" height="247" alt="image" src="https://github.com/user-attachments/assets/c32acef3-e09a-46d4-b24a-f506d4a4831d" />
+- <img width="460" height="247" alt="image" src="https://github.com/user-attachments/assets/c32acef3-e09a-46d4-b24a-f506d4a4831d" />
+
 + git show <commit-id>: Hiển thị chi tiết nội dung của một commit cụ thể.
-<img width="607" height="191" alt="image" src="https://github.com/user-attachments/assets/fb7e35c5-53ad-4326-a309-5ee56f859a11" />
+- <img width="607" height="191" alt="image" src="https://github.com/user-attachments/assets/fb7e35c5-53ad-4326-a309-5ee56f859a11" />
+
 + git blame <file>: Hiển thị người tạo ra (author) và commit ID của từng dòng trong một file.
 <img width="614" height="100" alt="image" src="https://github.com/user-attachments/assets/eb55dcda-41b1-4942-9f54-154461d13584" />
-Giải thích commit ID (SHA-1 hash).
+
+- Giải thích commit ID (SHA-1 hash).
 + Commit ID là một chuỗi ký tự duy nhất (thường là 40 ký tự hex, mặc dù Git thường chỉ hiển thị 7-10 ký tự đầu) được tạo bằng thuật toán SHA-1 hash cho mỗi commit.
 + Đóng vai trò là địa chỉ để định danh và tham chiếu duy nhất đến một phiên bản cụ thể của toàn bộ kho lưu trữ tại thời điểm commit đó. Mọi thứ trong Git đều được tham chiếu thông qua ID này.
 2. Undo / Revert / Reset thay đổi
@@ -97,13 +104,16 @@ Giải thích commit ID (SHA-1 hash).
   ++ git reset –soft: bỏ commit, giữ thay đổi => dùng khi muốn gộp commit hoặc sửa message
   ++ git reset –hard : xóa luôn commit và thay đổi => quay lại hẳn commit cũ
   ++ git revert: không xóa commit cũ, mà tạo 1 commit mới đảo ngược thay đổi commit đã chon;
+
 <img width="601" height="181" alt="image" src="https://github.com/user-attachments/assets/ac6632c5-28db-4e53-8576-b5978ecb7aa1" />
+
 - Khi nào nên dùng revert thay vì reset.
 + git reset: commit chưa push lên git => dùng để sắp xếp, gộp hoặc xóa commit cục bộ trước khi chia sẻ
 + git revert: commit đã được push => tạo ra sự an toàn, không phá hủy
 3. Làm việc với .gitignore
 + Ý nghĩa, cú pháp, ví dụ thực tế (node_modules, build/, v.v.)
 + File .gitignore dùng để bỏ qua các file/thư mục không cần Git theo dõi (build, cache, log, IDE...).
+
   <img width="410" height="189" alt="image" src="https://github.com/user-attachments/assets/b9073606-57f8-440f-99dd-0e588dbfc5fb" />
 
 
@@ -117,7 +127,9 @@ Giải thích commit ID (SHA-1 hash).
   **git checkout <branch-name>**: Chuyển sang làm việc trên nhánh đã tồn tại 
   **git switch <branch-name>**: Chuyển sang làm việc trên nhánh .
   **git checkout -b <new-branch> / git switch -c <new-branch>**: Tạo và chuyển sang nhánh mới ngay lập tức.
+
   <img width="475" height="215" alt="image" src="https://github.com/user-attachments/assets/24b5e508-74d0-40a2-b37c-5b88be2aa485" />
+
 3. Merge branch
 - git merge, xử lý xung đột (conflict)
 
@@ -139,7 +151,9 @@ Giải thích commit ID (SHA-1 hash).
 + Main Branch: Chứa mã ổn định.
 + Feature Branch: Phát triển tính năng mới.
 + Pull Request (PR): Được sử dụng để đánh giá và hợp nhất mã.
+
 # <a name="_meadwf83f92n"></a>**Phân 5: Remote repository (Github/ GitLab)**
+
 5. Thêm remote và đẩy code
 - git remote add, git push, git pull, git fetch
 - Lệnh *git remote add* cho phép bạn liên kết repository trên máy tính của mình với một repository từ xa, giúp bạn dễ dàng đẩy (push) mã nguồn lên hoặc kéo (pull) dữ liệu từ remote repository.
@@ -159,21 +173,30 @@ Giải thích commit ID (SHA-1 hash).
 # <a name="_kw3yst4y3ney"></a>**Phần 6: Công cụ và kỹ năng nâng cao**
 1. Tag và versioning
 - git tag:dùng để tạo, liệt kê, xem thông tin các tag trong repository => gán nhãn cho commit, dùng cho đánh dấu phiên bản
+
   <img width="590" height="131" alt="image" src="https://github.com/user-attachments/assets/6bbd68b1-cdf8-4696-99e2-2ee13b047ab8" />
+
 - git describe: mô tả commit hiện tại dựa trên tag gần nhất => biết commit hiện tại cách tag gần nhất bao nhiêu bước
+
 <img width="400" height="73" alt="image" src="https://github.com/user-attachments/assets/d8040750-baad-4e9c-aa44-b41a91e55ed8" />
+
 2. Stash
 Lưu tạm thay đổi chưa commit (git stash)
+
 <img width="604" height="99" alt="image" src="https://github.com/user-attachments/assets/60d75b43-b36e-4fbd-8084-29c3977b35ec" />
+
 git stash list: kiểm tra danh sách stash
 git stash apply: lấy lại các thay đôit
 3. Rebase và squash
 - git rebase: di chuyển các commit từ nhánh này sang nhánh khác để lịch sử thẳng và sách hơn => không tạo merge commit thừa
 4. Git alias & log formatting
 - Alias là tạo lệnh tắt cho các câu lệnh git dài.
+
 <img width="582" height="327" alt="image" src="https://github.com/user-attachments/assets/e08bae23-79d4-493d-ae5e-50a8578b5462" />
+
 5. Git reflog và khôi phục commit bị mất
 git reflog: khôi phục lại commit bị mất
+
 <img width="611" height="376" alt="image" src="https://github.com/user-attachments/assets/13e4de28-1679-4274-9799-3292466a2a18" />
 
 # <a name="_3j59tmtnhhsz"></a>**Phần 7: Thực hành dự án thực tế**
