@@ -44,6 +44,22 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 
    - **Sự khác biệt giữa Linux và Windows/macOS**.
    
+
+    | **Tiêu chí** | **Linux** | **Windows** | **macOS** |
+    |---------------|------------|--------------|------------|
+    | **Tính chất mã nguồn** | Mã nguồn mở, người dùng có quyền truy cập, thay đổi và phân phối lại mã nguồn. | Mã nguồn đóng, phát triển độc quyền bởi Microsoft. | Mã nguồn đóng, phát triển độc quyền bởi Apple, dựa trên nền Unix. |
+    | **Bảo mật** | Bảo mật cao nhờ cơ chế phân quyền và cập nhật nhanh; ít bị tấn công hơn do thị phần nhỏ. | Thường là mục tiêu của phần mềm độc hại do thị phần lớn hơn. | Bảo mật tốt, được Apple kiểm soát chặt chẽ cả phần mềm và phần cứng. |
+    | **Quản lý tài nguyên** | Hoạt động tốt trên phần cứng yếu, sử dụng ít tài nguyên hệ thống. | Tiêu thụ nhiều tài nguyên, đặc biệt trên hệ thống cấu hình thấp. | Tối ưu tốt trên phần cứng Apple, hiệu suất ổn định nhưng khó cài trên máy khác (hackintosh). |
+    | **Cập nhật hệ thống** | Rolling-release hoặc fixed-release, không yêu cầu khởi động lại khi cập nhật. | Cập nhật bắt buộc, thường yêu cầu khởi động lại, đôi khi gây gián đoạn công việc. | Cập nhật định kỳ, ổn định, thường yêu cầu khởi động lại nhưng ít gây lỗi. |
+    | **Cộng đồng hỗ trợ** | Cộng đồng mã nguồn mở lớn, hỗ trợ từ diễn đàn, wiki, GitHub. | Hỗ trợ chính thức từ Microsoft và cộng đồng người dùng rộng. | Hỗ trợ chính thức từ Apple, cộng đồng nhỏ hơn, ít tự do phát triển. |
+    | **Khả năng tùy chỉnh** | Tùy chỉnh cao, có thể thay đổi từ kernel đến giao diện người dùng. | Giới hạn tùy chỉnh, chủ yếu thông qua các thiết lập sẵn. | Hạn chế tùy chỉnh, ưu tiên trải nghiệm người dùng đồng nhất và ổn định. |
+    | **Ứng dụng và phần mềm** | Nhiều phần mềm mã nguồn mở; cần Wine hoặc máy ảo để chạy ứng dụng Windows. | Nhiều phần mềm thương mại, phổ biến trong doanh nghiệp. | Hỗ trợ tốt cho thiết kế đồ họa, âm nhạc, lập trình iOS; ít phần mềm game. |
+    | **Phù hợp cho máy chủ** | Phổ biến cho máy chủ web và doanh nghiệp nhờ tính ổn định, bảo mật cao. | Windows Server được dùng trong doanh nghiệp lớn, tích hợp tốt với hệ sinh thái Microsoft. | Ít được dùng cho máy chủ, chủ yếu trong môi trường phát triển macOS/iOS. |
+    | **Giá thành** | Miễn phí, hầu hết các bản phân phối không có phí bản quyền. | Phải trả phí bản quyền cho hệ điều hành và phần mềm như Office. | Tính trong giá phần cứng Apple, không bán riêng hệ điều hành. |
+    | **Bảo trì hệ thống** | Bảo trì đơn giản, cập nhật linh hoạt, không cần khởi động lại thường xuyên. | Bảo trì phức tạp hơn, cập nhật tự động đôi khi gây lỗi. | Bảo trì dễ dàng, Apple kiểm soát toàn bộ quy trình cập nhật. |
+    | **Thị phần và độ phổ biến** | Phổ biến trong server, hệ thống nhúng, môi trường lập trình. | Chiếm thị phần lớn nhất trong máy tính cá nhân. | Phổ biến trong lĩnh vực sáng tạo (thiết kế, âm nhạc, media). |
+
+   
    - **Ưu điểm: bảo mật, miễn phí, tùy biến, hiệu suất cao.**
      + **Mã nguồn mở và miễn phí**: Phần mềm mã nguồn mở cho phép bất kỳ ai cũng có thể đóng góp, chỉnh sửa và cải thiện mã nguồn. Ngoài ra, người dùng có thể tải xuống và sử dụng miễn phí.
      + **Khả năng tùy chỉnh và linh hoạt**: Người dùng có thể linh hoạt trong việc chỉnh sửa hệ điều hành theo nhu cầu của mình. Linux có nhiều bản phân phối, bao gồm Fedora, Ubuntu, Arch Linux, Debian, Linux Mint và các bản phân phối khác. Các bản phân phối này cung cấp cho người dùng nhiều tùy chọn tính năng hơn.
@@ -189,7 +205,15 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 
 12. **Quyền root và an toàn**
     - Tại sao không nên chạy mọi thứ bằng root.
+      - Tài khoản **root** (còn gọi là superuser) là tài khoản người dùng có đặc quyền cao nhất trên hệ thống. Nó được thiết kế để thực hiện các tác vụ quản trị hệ thống quan trọng
+      - Không nên chạy mọi thứ bằng **root**:
+        - **Rủi ro bảo mật cao**: Nếu chạy chương trình bằng quyền root, bất kỳ lỗ hổng hoặc mã độc nào trong chương trình đó cũng có thể kiểm soát toàn bộ hệ thống.
+        - Vi phạm nguyên tắc **“nguyên tắc đặc quyền tối thiểu”** (Principle of Least Privilege) — chỉ cấp quyền cần thiết để hạn chế thiệt hại khi có sự cố.
+        - **Lỗi người dùng có thể gây hại lớn**: Một thao tác sai (ví dụ: xóa nhầm file hệ thống, ghi đè cấu hình quan trọng) có thể khiến hệ thống bị hỏng hoàn toàn.
+        - **Giảm khả năng kiểm soát và phân quyền**: Việc luôn dùng root khiến khó theo dõi ai đã thực hiện hành động nào, gây khó khăn cho quản lý và bảo mật.
     - Phân biệt `sudo` và `su`.
+      - `Sudo` là một cơ chế quản lý quyền, phụ thuộc vào /etc/sudoers, để cho phép người dùng thực hiện một số lệnh quản trị với quyền root hoặc quyền của người dùng khác mà không cần đăng nhập trực tiếp vào tài khoản đó. Khi dùng sudo, người dùng nhập mật khẩu của chính mình.
+      - `su`: (viết tắt của substitute user hoặc switch user) được dùng để chuyển đổi sang tài khoản khác (thường là root) bằng cách nhập mật khẩu của tài khoản đích. Nó mở một phiên shell mới với quyền của người dùng đó cho đến khi thoát ra (exit).
 
 ---
 
@@ -197,8 +221,15 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 
 13. **Quản lý tiến trình (process)**
 
-    - `ps`, `top`, `htop`, `kill`, `killall`.
-    - Foreground và background process (`&`, `fg`, `bg`).
+    - `ps`: liệt kê các dòng lệnh đang chạy.
+    - `top`: theo dõi tiến trình đang chạy theo thời gian thực, sắp xếp theo mức sử dụng CPU. Cung cấp cái nhìn động về tải hệ thống.
+    - `htop`: phiên bản cải tiến hơn của `top` hỗ trợ thao tác bằng chuột và hiển thị đồ họa dễ nhìn.
+    -  `kill`: Gửi tín hiệu tới một tiến trình dựa trên PID (Process ID)
+    -  `killall`. Gửi tín hiệu tới các tiến trình dựa trên tên tiến trình (process name).
+    
+    - **Foreground và background process (`&`, `fg`, `bg`).**
+      - **Foreground**: Tiến trình chạy trực tiếp, chiếm quyền điều khiển terminal, phải chờ lệnh hoàn thành hoặc nhấn Ctrl+C để dừng.
+      - **Background** : Tiến trình chạy ngầm, không chiếm quyền điều khiển terminal, cho phép tiếp tục thực hiện các lệnh khác.
 
 14. **Kiểm tra tài nguyên hệ thống**
 
