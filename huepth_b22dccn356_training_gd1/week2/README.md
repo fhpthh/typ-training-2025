@@ -136,9 +136,9 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
        - `ls -l /` : hiển thị nội dung dạng danh sách
        - `ls -a /` hiển thị các file thư mục ẩn
        - `ls -t /` sắp xếp lại theo thứ tự mới nhất đến cũ nhất
-       - ls -lta: gọp 3 câu lệnh trên
+       - ls -lta: gộp 3 câu lệnh trên
     
-       ![Câu lệnh](images/terminal.png)
+       ![alt text](image-5.png)
 
      - `cd`: di chuyển giữa các thư mục
      - `clear`: xóa sạch màn hình terminal
@@ -208,10 +208,18 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 
 9. **Tìm kiếm file**
    - `find`, `locate`, `grep`.
-     - `find`: Tìm file trong hệ thống
-     - `locate`:tìm nhanh
-     - `grep`: tìm chuỗi trong file
+     - `find`: Tìm file/ thư mục trong hệ thống.
+       - Tìm file theo tên: `find /home -name "file.txt"`
+       - Tìm theo phần mở rộng: `find / -type f -name "*.log"`
+       - Tìm theo kích thước: `find /var -size +100M`
+     - `locate`:Tìm file nhanh bằng cơ sở dữ liệu (nhanh hơn find nhưng cần cập nhật CSDL định kỳ)
+        ```
+        updatedb    
+        locate file.txt
+        ```
+     - `grep`: tìm chuỗi trong file `grep "xin chao file.txt`
    - Kết hợp `grep` với `pipe (|)`.
+     - Lọc kết quả từ lệnh khác: `ps aux | grep python` => hiển thị các tiến trình có chứa từ "python"
 
 ---
 
