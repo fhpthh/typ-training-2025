@@ -98,7 +98,8 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
           - SysVinit: Chạy các script trong các thư mục Runlevel (/etc/rc.d/rcX.d).
           - systemd (Phổ biến nhất): Khởi động các "Target" (nhóm các dịch vụ) theo thứ tự được định nghĩa (ví dụ: multi-user.target cho chế độ dòng lệnh, graphical.target cho chế độ đồ họa).
         - Hoàn thành: Sau khi tất cả các dịch vụ cần thiết đã khởi động, hệ thống hiển thị màn hình đăng nhập (CLI hoặc GUI), và quá trình khởi động kết thúc.
-    ![alt text](image-3.png)
+    
+        ![alt text](image-3.png)
    
    - **Các thư mục hệ thống chính (`/bin`, `/etc`, `/home`, `/usr`, `/var`...).**
      - `root`: Thư mục cá nhân (home directory) của người dùng root (quản trị viên hệ thống). Nó được tách biệt khỏi /home để đảm bảo quyền truy cập và bảo mật. Ví dụ: `/root/.ssh`
@@ -124,6 +125,7 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
    - Terminal: giao diện dòng lệnh (CLI), cung cấp một cửa sổ để bạn nhập và xem kết quả của các lệnh. Terminal không trực tiếp hiểu lệnh, mà chỉ chuyển lệnh đến Shell để xử lý.
    - Shell: là chương trình xử lý lệnh – nhận lệnh từ Terminal, thông dịch rồi gửi yêu cầu cho Kernel (nhân hệ điều hành) để thực thi. Sau khi Kernel xử lý xong, Shell nhận kết quả và gửi trả lại Terminal.
    - Mở terminal, chạy lệnh cơ bản.
+   
    ![Terminal](images/terminal.png)
 
 5. **Lệnh cơ bản trong Linux**
