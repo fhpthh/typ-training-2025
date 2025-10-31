@@ -138,7 +138,7 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
        - `ls -t /` sắp xếp lại theo thứ tự mới nhất đến cũ nhất
        - ls -lta: gộp 3 câu lệnh trên
     
-       ![alt text](image-5.png)
+       ![alt text](images/image-5.png)
 
      - `cd`: di chuyển giữa các thư mục
      - `clear`: xóa sạch màn hình terminal
@@ -233,7 +233,7 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
       - `adduser`:tạo user mới và tạo ra các thông tin thư mục liên quan tới user đó
       - `deluser`: xóa user
       
-      ![alt text](image-2.png)
+      ![alt text](images/image-2.png)
     
     - `su`, `sudo`, `/etc/passwd`.
       - `su` (switch user) cho phép bạn chuyển sang một người dùng khác trong cùng hệ thống.
@@ -565,11 +565,11 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
       - `du -ah /home | sort -rh | head -n 2` : Hiển thị 2 file hoặc thư mục lớn nhất trong **/home**
       - `find /home -type f -exec du -h {} + | sort -rh | head -n 5` : chỉ liệt kê 5 file lớn nhất không tính thư mục
 
-      ![alt text](image.png)
+      ![alt text](images/image.png)
 
     - Cấu hình SSH và kiểm tra kết nối.
     
-      ![alt text](image-1.png)
+      ![alt text](images/image-1.png)
       ![alt text](images/ssh.png)
 
 ---
