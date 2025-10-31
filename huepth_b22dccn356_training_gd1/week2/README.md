@@ -285,6 +285,11 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
     - **Foreground và background process (`&`, `fg`, `bg`).**
       - **Foreground**: Tiến trình chạy trực tiếp, chiếm quyền điều khiển terminal, phải chờ lệnh hoàn thành hoặc nhấn Ctrl+C để dừng.
       - **Background** : Tiến trình chạy ngầm, không chiếm quyền điều khiển terminal, cho phép tiếp tục thực hiện các lệnh khác.
+      - Dấu & – Chạy tiến trình ở chế độ nền (background)
+      - fg – Chuyển một tiến trình đang chạy ngầm về chế độ foreground để tương tác hoặc dừng nó bằng Ctrl + C.
+      - bg – Tiếp tục chạy tiến trình ở chế độ nền
+      
+  ![alt text](images/forback.png.png)
 
 14. **Kiểm tra tài nguyên hệ thống**
 
@@ -361,7 +366,7 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
     - `apt update`: Lấy về danh sách mới nhất của các phần mềm từ repository. Không cài đặt hay nâng cấp phần mềm — chỉ cập nhật thông tin.
     - `apt upgrade`: Cập nhật tất cả gói phần mềm hiện có lên phiên bản mới nhất (theo danh sách từ apt update). Dùng sau khi chạy `apt update`.
     - Kiểm tra package đang cài đặt: `dpkg -l`.
-      - `dpkg -l`: iệt kê tất cả các gói đã được cài đặt. 
+      - `dpkg -l`: liệt kê tất cả các gói đã được cài đặt. 
       - Tìm 1 gói cụ thể dùng `grep` để lọc theo tên phần mềm: `dpkg -l | grep nginx`
       
 18. **Tạo và sử dụng alias**
