@@ -77,6 +77,28 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
     ![Commit graph](images/hoatdongLinux.png)
     
    - **Quá trình khởi động (boot process) cơ bản**.
+     - **BIOS / UEFI**
+       - POST (Power-On Self-Test): Khi bật nguồn, BIOS (Basic Input/Output System) hoặc UEFI (Unified Extensible Firmware Interface) chạy kiểm tra các thành phần phần cứng cơ bản (CPU, RAM, card màn hình).
+       - Tìm thiết bị Boot: Firmware (BIOS/UEFI) xác định thiết bị (ổ đĩa) để khởi động theo thứ tự cấu hình.
+       - Tải Bootloader: Firmware đọc Master Boot Record (MBR) (với BIOS) hoặc EFI System Partition (ESP) (với UEFI) trên thiết bị đó và tải Bootloader (ví dụ: GRUB, LILO) vào bộ nhớ.
+  
+     - **Bootloader** (Trình nạp khởi động): là chương trình nhỏ giúp nạp kernel của Linux vào RAM.
+       -Hiển thị Menu: Bootloader (thường là GRUB) hiển thị một menu cho phép người dùng chọn hệ điều hành hoặc kernel muốn khởi động.
+       - Tải Kernel: Sau khi chọn (hoặc hết thời gian chờ), Bootloader tải hai thành phần chính vào RAM:
+         - Kernel: Lõi của hệ điều hành.
+         - Initramfs/Initrd: Một filesystem RAM tạm thời chứa các driver và tiện ích cơ bản cần thiết để kernel có thể truy cập ổ đĩa thực.
+      - **Khởi tạo Kernel**:
+        - Giải nén và Khởi tạo: Kernel tự giải nén và bắt đầu chạy.
+        - Mount Root Filesystem tạm thời: Kernel sử dụng Initramfs/Initrd để load các module (driver) cần thiết để truy cập và mount Root Filesystem (hệ thống tập tin gốc) thực.
+        - Chuyển giao: Kernel sau đó chuyển quyền điều khiển từ Initramfs sang hệ thống Init thực trên Root Filesystem.
+      - **Hệ thống Init (systemd/SysVinit)**:
+        - Khởi chạy Init: Kernel khởi chạy chương trình Init (hoặc systemd) – luôn là tiến trình có PID 1.
+        - Thiết lập Môi trường: Init/systemd đọc các file cấu hình của nó để xác định các dịch vụ cần chạy.
+        - Chạy Service/Target
+          - SysVinit: Chạy các script trong các thư mục Runlevel (/etc/rc.d/rcX.d).
+          - systemd (Phổ biến nhất): Khởi động các "Target" (nhóm các dịch vụ) theo thứ tự được định nghĩa (ví dụ: multi-user.target cho chế độ dòng lệnh, graphical.target cho chế độ đồ họa).
+        - Hoàn thành: Sau khi tất cả các dịch vụ cần thiết đã khởi động, hệ thống hiển thị màn hình đăng nhập (CLI hoặc GUI), và quá trình khởi động kết thúc.
+    ![alt text](image-3.png)
    
    - **Các thư mục hệ thống chính (`/bin`, `/etc`, `/home`, `/usr`, `/var`...).**
      - `root`: Thư mục cá nhân (home directory) của người dùng root (quản trị viên hệ thống). Nó được tách biệt khỏi /home để đảm bảo quyền truy cập và bảo mật. Ví dụ: `/root/.ssh`
@@ -196,12 +218,35 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 10. **Người dùng và nhóm (User & Group)**
 
     - `whoami`, `id`, `adduser`, `deluser`.
+      - `whoami`: kiểm tra xem đang đăng nhập với user nào
+      - `id`: hiển thị UID (User ID), GID (Group ID) và các nhóm (groups) mà người dùng thuộc về.
+      - `adduser`:tạo user mới và tạo ra các thông tin thư mục liên quan tới user đó
+      - `deluser`: xóa user
+      
+      ![alt text](image-2.png)
+    
     - `su`, `sudo`, `/etc/passwd`.
+      - `su` (switch user) cho phép bạn chuyển sang một người dùng khác trong cùng hệ thống.
+      ```
+          su [username]: chỉ chuyển user, giữ nguyên môi trường hiện tại.
+          su - [username]: chuyển user và tải luôn môi trường, biến môi trường của user đó.
+      ```
+      - `sudo`: (superuser do) cho phép user thực thi lệnh với quyền root tạm thời và chỉ những user thuộc nhóm sudoers mới có quyền này. => giúp an toàn hơn thay vì đăng nhập trực tiếp root.
+      - `/etc/passwd`: file chứa danh sách tất cả user của hệ thống.
 
 11. **Phân quyền file**
 
     - `ls -l`, quyền đọc/ghi/thực thi (`rwx`).
+      - `ls -l`: xem danh sách các file/ thư mục kèm quyền truy cập, chủ sở hữu, nhóm và các thông tin khác.
+      - `rwx `: đọc/ ghi/ thực thi: `r = 4, w = 2, x = 1` => Người dùng full quyền: `rwx = 7`
     - `chmod`, `chown`, `chgrp`.
+      - `chmod`: thay đổi quyền truy cập file/ thư mục
+      - `chown`: thay đổi chủ sở hữu của file/ thư mục
+      - `chgrp`: thay đổi nhóm sở hữu của file/ thư mục
+
+    ![chmod](images/chmod.png)
+    ![chown](images/chown.png)
+
 
 12. **Quyền root và an toàn**
     - Tại sao không nên chạy mọi thứ bằng root.
@@ -234,10 +279,48 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 14. **Kiểm tra tài nguyên hệ thống**
 
     - `df`, `du`, `free`, `uptime`, `uname`, `lscpu`, `lsblk`.
+      - `df -h`: hiển thị dung lượng đĩa còn trống (`-h`: hiển thị dung lượng ở dạng dễ đọc (GB, MB).)
+      - `free -m`:  hiển thị thông tin RAM
+      - `du`: kiểm ra dung lượng thư mục hoặc file đang chiếm dụng `du -sh /home/huepth`
+      - `uname`: xem thông tin hệ điều hành và nhân
+      - `lscpu`:xem thông tin CPU chi tiết.
+      - `lsblk`: hiển thị danh sách ổ đĩa và phân vùng
+    
+    ![image](images/image2.png)
+    ![image](images/img3.png)
 
 15. **Dịch vụ và tiến trình nền (daemon)**
-    - `systemctl`, `service`, `journalctl`.
+    - `systemctl`: Quản lý dịch vụ trong hệ thống dùng systemd
+    ```
+    systemctl start <service> - Khởi động dịch vụ
+    systemctl stop <service> - Dừng dịch vụ
+    systemctl restart <service> - Khởi động lại dịch vụ
+    systemctl status <service> - Kiểm tra trạng thái dịch vụ
+    systemctl enable <service> - Tự động khởi động khi boot
+    systemctl disable <service> - Ngừng tự động khởi động
+
+    ```
+    - `service`: Lệnh cũ, tương thích hệ thống dùng SysVinit
+    
+    ```
+    service <service> start
+    service <service> stop
+    service <service> restart
+    service <service> status
+    ```
+    - `journalctl`: Dùng để xem log của systemd và các dịch vụ (daemon).
+    
+    ```
+    journalctl - Xem toàn bộ log hệ thống
+    journalctl -u nginx - Xem log của dịch vụ nginx
+    journalctl -u ssh --since today - Xem log ssh từ hôm nay
+    journalctl -xe  - Xem log lỗi chi tiết nhất
+
+    ```
     - Start/stop/restart dịch vụ.
+      - Start – Khởi động dịch vụ
+      - Stop – Dừng dịch vụ đang chạy.
+      - Restart – Khởi động lại dịch vụ dùng khi thay đổi cấu hình hoặc muốn làm mới dịch vụ.
 
 ---
 
@@ -246,16 +329,46 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 16. **Trình quản lý gói (Package Manager)**
 
     - Debian/Ubuntu: `apt`, `apt-get`.
+      - `apt` là công cụ quản lý gói được dùng trong hệ điều hành Debian và các bản phân phối dựa trên nó như Ubuntu.
+      - Cho phép người dùng cài đặt, cập nhật, gỡ bỏ và quản lý các phần mềm từ kho lưu trữ (repository) của hệ thống.
+      - `apt-get`: công cụ cũ nhưng mạnh mẽ hơn `apt`, thường được dùng trong script tự động.
+      
+      ```
+      sudo apt install nginx
+      sudo apt update
+      sudo apt upgrade
+      sudo apt-get install apache2
+      sudo apt-get remove apache2
+      ```
     - RedHat/CentOS: `yum`, `dnf`.
+      - `yum` (Yellowdog Updater Modified) là công cụ quản lý gói trên hệ điều hành họ Red Hat.
 
+      - `dnf` là phiên bản kế nhiệm của `yum`, hỗ trợ xử lý phụ thuộc nhanh hơn và có hiệu suất tốt hơn.
 17. **Cài đặt và gỡ bỏ phần mềm**
 
-    - `sudo apt install`, `sudo apt remove`, `apt update`, `apt upgrade`.
+    - `sudo apt install`: tải và cài đặt phần mềm từ kho chính thức. `sudo`: cho phép chạy lệnh với quyền quản trị (root).
+    - `sudo apt remove`: Xóa gói phần mềm khỏi hệ thống nhưng vẫn giữ lại file cấu hình (để cài lại nhanh sau này).
+    - `apt update`: Lấy về danh sách mới nhất của các phần mềm từ repository. Không cài đặt hay nâng cấp phần mềm — chỉ cập nhật thông tin.
+    - `apt upgrade`: Cập nhật tất cả gói phần mềm hiện có lên phiên bản mới nhất (theo danh sách từ apt update). Dùng sau khi chạy `apt update`.
     - Kiểm tra package đang cài đặt: `dpkg -l`.
-
+      - `dpkg -l`: iệt kê tất cả các gói đã được cài đặt. 
+      - Tìm 1 gói cụ thể dùng `grep` để lọc theo tên phần mềm: `dpkg -l | grep nginx`
+      
 18. **Tạo và sử dụng alias**
     - Tạo lệnh tắt trong file `~/.bashrc`.
     - `alias ll='ls -alF'`.
+    - `alias` giúp tạo lệnh rút gọn thay cho các lệnh dài, giúp tiết kiệm thời gian và tránh gõ sai.
+
+    - Alias chỉ tồn tại trong phiên làm việc hiện tại. Nếu muốn lưu vĩnh viễn, thêm vào file `~/.bashrc` hoặc `~/.bash_aliases`.
+    - Ví dụ:
+    
+    ```
+    Thay vì gõ: ls -alF --color=auto
+
+    Chuyển thành: alias ll='ls -alF --color=auto'
+
+    => Bây giờ chỉ cần gõ ll là hệ thống sẽ tự gọi và thực thi lệnh gốc
+    ```
 
 ---
 
@@ -263,23 +376,63 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 
 19. **Lệnh kiểm tra mạng**
 
-    - `ping`
-    - `ifconfig`
-    - `ip addr`
-    - `netstat`
-    - `ss`
-    - `curl`
-    - `wget`.
+    - `ping`: kiểm tra xem máy có thể két nối tới internet hay không `ping 192.168.126.100`
+    - `ifconfig`: dùng để hiển thị các thông tin của máy tính đang muốn kiểm tra như Host, địa chỉ IP và DNS.
+    - `ip addr`: thay thế `ifconfig` xem cấu hình địa chỉ IP
+    - `netstat`: liệt kê các kết nối mạng, cổng đang mở, và các dịch vujd dnag lắng nghe
+      - `netstat -tlpun`:
+      - t: Hiển thị các kết nối TCP.
+      - u: Hiển thị các kết nối UDP.
+      - l: Hiển thị các cổng đang lắng nghe (listening).
+      - p: Hiển thị ID chương trình (PID) và tên chương trình đang sử dụng cổng đó.
+      - n: Hiển thị địa chỉ IP và số cổng theo định dạng số, thay vì cố gắng phân giải chúng thành tên máy chủ và tên dịch vụ, giúp tăng tốc độ hiển thị. 
+    - `ss` công cụ mới nhanh hơn `netstat` dùng để kiểm tra các kết nối mạng và cổng
+    - `curl`: gửi yêu cầu dến một địa chỉ url kiểm tra phản hòi của mảng.
+    - `wget`: tải file hoặc nội dung phản hồi của website
 
-20. **Kết nối SSH và truyền file**
+20.  **Kết nối SSH và truyền file**
 
-    - `ssh user@ip`
-    - `scp`
-    - `rsync`
-    - Thiết lập SSH key (`ssh-keygen`, `ssh-copy-id`).
+     - `ssh user@ip`: kết nối từ xa tới máy chủ Linux thông qua giao thức SSH.
+        - VD: `ssh huepth@192.168.126.99`
+     - `scp`: sao chép file qua SSH
+    
+      ```c
+      scp text.txt huepth@192.168.126.99:/home/huepth
+      ```
 
-21. **Kiểm tra cổng và firewall**
+     - `rsync`: Dùng để đồng bộ dữ liệu giữa hai máy, chỉ sao chép phần thay đổi (nhanh hơn scp)
+     ```c
+     rsync -avz [thư_mục_nguồn]/ [user]@[IP]:[thư_mục_đích]/
+
+     VD: rsync -avz /home/huepth/Documents/ huepth@192.168.126.99:/home/huepth/backup/
+     -a: giữ nguyên quyền và cấu trúc thư mục
+     -v: hiển thị chi tiết tiến trinhg
+     -z: nén dữ liệu khi truyền
+      ```
+
+  - Thiết lập SSH key (`ssh-keygen`, `ssh-copy-id`). 
+    - Mục đích: đăng nhập không cần mật khẩu bằng cặp khóa công khai - riêng tư.
+      - Tạo SSH key trên máy cục bộ: `ssh-keygen` => tạo khóa trong thư mục `~/.ssh/id_rsa` và `id_rsa.pub`
+      - Sao chép khóa công khai lên máy chủ `ssh-copy-id huepth@192.168.126.99`
+      - Đăng nhập không cần mật khẩu
+      `ssh huepth@192.168.126.99`
+
+   
+
+21.  **Kiểm tra cổng và firewall**
     - `ufw`, `iptables`, `ss -tuln`.
+      - `ufw` (Uncomplicated Firewall): Công cụ quản lý tường lửa đơn giản trên Ubuntu/Debian.
+        - `sudo ufw status`: kiểm tra trạng thái tường lửa
+        - `sudo ufw allow 22`: mở cộng dịch vụ 
+        - `sudo ufw deny 21`: chặn cổng cụ thể
+        - `sudo uwf enable`: kích hoạt tường lửa
+        - `sudo uwf disable`: tắt tường lửa
+      - `iptables`: Công cụ mạnh mẽ hơn để quản lý firewall ở mức kernel (thường dùng trên các bản CentOS/RedHat).
+      - `ss -tuln`: 
+        - t: Hiển thị các kết nối TCP.
+        - u: Hiển thị các kết nối UDP.
+        - l: Hiển thị các cổng đang lắng nghe (listening).
+        -n: Hiển thị địa chỉ IP và số cổng theo định dạng số, thay vì cố gắng phân giải chúng thành tên máy chủ và tên dịch vụ, giúp tăng tốc độ hiển thị. 
 
 ---
 
@@ -289,14 +442,94 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 
     - File `.sh`, cú pháp `#!/bin/bash`.
     - Cách chạy: `bash script.sh` hoặc `chmod +x script.sh`.
+    
+    - **Shell Script** là tập hợp các lệnh Linux được viết trong một file văn bản (thường có phần mở rộng .sh), giúp tự động hóa các công việc lặp đi lặp lại như sao lưu dữ liệu, kiểm tra hệ thống, cài đặt phần mềm,...
+      - File `.sh`: 
+        - Dòng khai báo trình thông dịch (Shebang). Dòng đầu tiên luôn bắt đầu bằng `#!/bin/bash`→ Cho hệ điều hành biết rằng script này sẽ được chạy bằng Bash shell.
+        - Phần nội dung (Body) bao gồm các lệnh, biến, vòng lặp, điều kiện,... mà bạn muốn thực thi.
+        - Phần kết thúc (Exit code – tùy chọn)
+          - Dòng exit 0 thường được dùng để kết thúc script với trạng thái thành công.
+          - 0 nghĩa là không lỗi, còn các số khác (1, 2, 127, …) báo lỗi
+    
+    - Cách chạy: `bash script.sh` hoặc `chmod +x script.sh`.
+      - `bash script.sh`: Chạy script bằng trình thông dịch Bash, dù file chưa có quyền thực thi.
+      - `chmod +x script.sh`: Cấp quyền thực thi, chạy trực tiếp file như một chương trình;
+    
 
 23. **Biến, vòng lặp và điều kiện**
 
     - `if`, `for`, `while`, biến môi trường (`$USER`, `$HOME`).
+  
+    - Biến là cách để lưu trữ dữ liệu tạm thời và tái sử dụng trong chương trình
+    - **Biến hệ thống**: được shell tạo sẵn.
+    ```c
+    $HOME - Thư mục chính của user
+    $USER - Tên người dùng hiện tại
+    $PATH - Danh sách thư mục chứa lệnh hệ thống
+    $BASH - Đường dẫn đến shell hiện tại (ví dụ: /bin/bash)
+    ```
+    - **Biến người dùng**: tự định nghĩa
+    ```
+    name="Hue"
+    echo "Xin chào, $name!"
+    ```
+    **Câu lệnh điều kiện**
+    - `if-then-else-fi` để kiểm tra và thực thi tùy thuộc điều kiện.
+      ```
+          if [ điều_kiện ]; then
+            lệnh_nếu_đúng
+          else
+            lệnh_nếu_sai
+          fi
+      ```
+
+    **Vòng lặp** giúp thực thi một nhóm lệnh nhiều lần.
+      - **for**: 
+      ```
+      for i in {1..5} 
+      do 
+        echo "Số thứ tự: $i"
+      done
+      ```
+
+      - **while**: chạy cho đến khi sai
+      ```
+      count=1
+      while [ $count -le 5 ]
+      do
+          echo "While loop: $count"
+          count=$((count+1))
+      done
+      ```
 
 24. **Tự động hóa tác vụ**
     - `cron`, `crontab -e`.
+    - `cron` là một dịch vụ nền (daemon) trong Linux dùng để tự động chạy các tác vụ (scripts, lệnh, chương trình) theo thời gian định kỳ — ví dụ như sao lưu dữ liệu hàng ngày, gửi email tự động, xóa log cũ, cập nhật hệ thống,... Dịch vụ này hoạt động thông qua bảng lịch **crontab** (cron table).
+    - **crontab** (cron table): là file cấu hình lịch chạy các lệnh tự động. Mỗi người dùng (kể cả root) đều có một file crontab riêng.
+
+    ```
+            *     *     *     *     *     command to be executed
+            -     -     -     -     -
+            |     |     |     |     |
+            |     |     |     |     +----- day of week (0 - 6) (Sunday=0)
+            |     |     |     +------- month (1 - 12)
+            |     |     +--------- day of month (1 - 31)
+            |     +----------- hour (0 - 23)
+            +------------- min (0 - 59)
+    ```
+    `crontab -e`: Mở file crontab để chỉnh sửa lịch chạy
     - Lên lịch chạy script.
+      - File script /usr/local/bin/backup_logs.sh với nội dung:
+      ```
+      #!/bin/bash
+      tar -czf /backup/logs/system_logs_$(date +%F).tar.gz /var/log
+      ```
+
+      - Cấp quyền chạy cho script:
+      `chmod +x /usr/local/bin/backup_logs.sh`
+
+      - Mở **crontab**: `crontab -e`
+      - Thêm dòng `0 3 * * * /usr/local/bin/backup_logs.sh` => chạy script sao lưu log tự động vào 3h sáng mỗi ngày.
 
 ---
 
@@ -304,9 +537,29 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 
 25. **Bài tập thực tế**
     - Tạo user mới, cấp quyền hạn chế.
+    
+      ![Thêm user](images/adduser.png)
+      ![Phân quyền](images/chownchmod.png)
+
     - Tạo và nén backup thư mục.
+    
+      ![Tạo và nén backup](images/giainencau2.png)
+
     - Viết script tự động sao lưu log hệ thống hàng ngày.
+    
+      ![sao lưu](images/saoluu.png)
+      ![script](images/script.png)
+
     - Dò tìm file lớn nhất trong thư mục home.
+      
+      - `du -ah /home | sort -rh | head -n 2` : Hiển thị 2 file hoặc thư mục lớn nhất trong **/home**
+      - `find /home -type f -exec du -h {} + | sort -rh | head -n 5` : chỉ liệt kê 5 file lớn nhất không tính thư mục
+
+      ![alt text](image.png)
+
     - Cấu hình SSH và kiểm tra kết nối.
+    
+      ![alt text](image-1.png)
+      ![alt text](images/ssh.png)
 
 ---
