@@ -9,7 +9,7 @@
 
    - Phân biệt giữa Linux kernel và các bản phân phối (Ubuntu, CentOS, Debian...).
    
-     - Linux distro – hay bản phân phối Linux là giLinux distro là các hệ điều hành được phát triển dựa trên nhân Linux. Nó có vai trò đóng gói nhân Linux cùng với các phần mềm và tiện ích cần thiết, tạo thành một hệ điều hành hoàn chỉnh mà mà người dùng có thể cài đặt và khởi chạy. 
+     - Linux distro (hay còn gọi là bản phân phối Linux) là các hệ điều hành được phát triển dựa trên nhân Linux. Nó có vai trò đóng gói nhân Linux cùng với các phần mềm và tiện ích cần thiết, tạo thành một hệ điều hành hoàn chỉnh mà mà người dùng có thể cài đặt và khởi chạy.
 
 | Tên | Khái niệm | Ưu điểm | Nhược điểm |
 |---------------|-------------|----------|------------|
@@ -99,7 +99,7 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
           - systemd (Phổ biến nhất): Khởi động các "Target" (nhóm các dịch vụ) theo thứ tự được định nghĩa (ví dụ: multi-user.target cho chế độ dòng lệnh, graphical.target cho chế độ đồ họa).
         - Hoàn thành: Sau khi tất cả các dịch vụ cần thiết đã khởi động, hệ thống hiển thị màn hình đăng nhập (CLI hoặc GUI), và quá trình khởi động kết thúc.
     
-        ![alt text](image-3.png)
+        ![alt text](images/linux.png)
    
    - **Các thư mục hệ thống chính (`/bin`, `/etc`, `/home`, `/usr`, `/var`...).**
      - `root`: Thư mục cá nhân (home directory) của người dùng root (quản trị viên hệ thống). Nó được tách biệt khỏi /home để đảm bảo quyền truy cập và bảo mật. Ví dụ: `/root/.ssh`
@@ -131,12 +131,12 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 5. **Lệnh cơ bản trong Linux**
 
    - `pwd`, `ls`, `cd`, `clear`, `history`.
-     - `pwd`: in ra 
+     - `pwd`: in đường dẫn thư mục làm việc hiện tại, bắt đầu từ thư mục gốc (/) 
      - `ls`: liệt kê nội dung các thư mục
        - `ls -l /` : hiển thị nội dung dạng danh sách
        - `ls -a /` hiển thị các file thư mục ẩn
        - `ls -t /` sắp xếp lại theo thứ tự mới nhất đến cũ nhất
-       - ls -lta: gộp 3 câu lệnh trên
+       - `ls -lta`: gộp 3 câu lệnh trên
     
        ![alt text](images/image-5.png)
 
@@ -217,7 +217,7 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
         updatedb    
         locate file.txt
         ```
-     - `grep`: tìm chuỗi trong file `grep "xin chao file.txt`
+     - `grep`: tìm chuỗi trong file `grep "xin chao" file.txt`
    - Kết hợp `grep` với `pipe (|)`.
      - Lọc kết quả từ lệnh khác: `ps aux | grep python` => hiển thị các tiến trình có chứa từ "python"
 
@@ -245,14 +245,38 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
       - `/etc/passwd`: file chứa danh sách tất cả user của hệ thống.
 
 11. **Phân quyền file**
-
+    - Phân quyền trong Linux:
+      - User (u): chủ sở hữu của file/ thư mục
+      - Group (g): nhóm người dùng có quyền chung
+      - Other (o): những người dùng khác còn lại trong hệ thống
     - `ls -l`, quyền đọc/ghi/thực thi (`rwx`).
       - `ls -l`: xem danh sách các file/ thư mục kèm quyền truy cập, chủ sở hữu, nhóm và các thông tin khác.
       - `rwx `: đọc/ ghi/ thực thi: `r = 4, w = 2, x = 1` => Người dùng full quyền: `rwx = 7`
+      - Numeric:Mỗi quyền được biểu diễn bằng tổng số `r = 4, w = 2, x = 1`
+      ```
+      chmod 750 file.txt => rwxr-x---
+        7->user: đọc, ghi, thực thi
+        5->group: đọc, thực thi
+        0->other: không có quyền  
+      ```
+      - Symbolic: biểu diễn bằng ký tự và toán tử
+        - `+`: thêm quyền
+        - `-`: bỏ quyền
+        - `=`: gán lại quyền cụ thể
+      ```
+      chmod u+x file.txt - thêm quyền thực thi cho user
+      chmod g-w file.txt - bỏ quyền ghi của group
+      chmod o=r file.txt - gán cho other chỉ có quyền đọc
+      chmod ug=rw,o= file.txt - user & group có rw, other không có quyền
+      chmod u=rwx,g=rx,o=r file.txt - thiết lập quyền chi tiết cho từng nhóm
+      ```
+
+      
     - `chmod`, `chown`, `chgrp`.
       - `chmod`: thay đổi quyền truy cập file/ thư mục
       - `chown`: thay đổi chủ sở hữu của file/ thư mục
       - `chgrp`: thay đổi nhóm sở hữu của file/ thư mục
+      
 
     ![chmod](images/chmod.png)
     ![chown](images/chown.png)
@@ -289,7 +313,7 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
       - fg – Chuyển một tiến trình đang chạy ngầm về chế độ foreground để tương tác hoặc dừng nó bằng Ctrl + C.
       - bg – Tiếp tục chạy tiến trình ở chế độ nền
       
-  ![alt text](images/forback.png.png)
+  ![alt text](images/forback.png)
 
 14. **Kiểm tra tài nguyên hệ thống**
 
@@ -394,7 +418,7 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
     - `ping`: kiểm tra xem máy có thể két nối tới internet hay không `ping 192.168.126.100`
     - `ifconfig`: dùng để hiển thị các thông tin của máy tính đang muốn kiểm tra như Host, địa chỉ IP và DNS.
     - `ip addr`: thay thế `ifconfig` xem cấu hình địa chỉ IP
-    - `netstat`: liệt kê các kết nối mạng, cổng đang mở, và các dịch vujd dnag lắng nghe
+    - `netstat`: liệt kê các kết nối mạng, cổng đang mở, và các dịch vụ đang lắng nghe
       - `netstat -tlpun`:
       - t: Hiển thị các kết nối TCP.
       - u: Hiển thị các kết nối UDP.
@@ -407,7 +431,7 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
 
 20.  **Kết nối SSH và truyền file**
 
-     - `ssh user@ip`: kết nối từ xa tới máy chủ Linux thông qua giao thức SSH.
+     - `ssh user@ip && ssh use@domain`: kết nối từ xa tới máy chủ Linux thông qua IP hoặc domain giao thức SSH.
         - VD: `ssh huepth@192.168.126.99`
      - `scp`: sao chép file qua SSH
     
@@ -440,14 +464,14 @@ CentOS |Bản phân phối ổn định, miễn phí, gần giống Red Hat.Ổn
         - `sudo ufw status`: kiểm tra trạng thái tường lửa
         - `sudo ufw allow 22`: mở cộng dịch vụ 
         - `sudo ufw deny 21`: chặn cổng cụ thể
-        - `sudo uwf enable`: kích hoạt tường lửa
-        - `sudo uwf disable`: tắt tường lửa
+        - `sudo ufw enable`: kích hoạt tường lửa
+        - `sudo ufw disable`: tắt tường lửa
       - `iptables`: Công cụ mạnh mẽ hơn để quản lý firewall ở mức kernel (thường dùng trên các bản CentOS/RedHat).
       - `ss -tuln`: 
         - t: Hiển thị các kết nối TCP.
         - u: Hiển thị các kết nối UDP.
         - l: Hiển thị các cổng đang lắng nghe (listening).
-        -n: Hiển thị địa chỉ IP và số cổng theo định dạng số, thay vì cố gắng phân giải chúng thành tên máy chủ và tên dịch vụ, giúp tăng tốc độ hiển thị. 
+        - n: Hiển thị địa chỉ IP và số cổng theo định dạng số, thay vì cố gắng phân giải chúng thành tên máy chủ và tên dịch vụ, giúp tăng tốc độ hiển thị. 
 
 ---
 
