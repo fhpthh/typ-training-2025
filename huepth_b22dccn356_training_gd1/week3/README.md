@@ -72,8 +72,43 @@
       ```
     
     * Cấu hình proxy
-        * Cho docker daemon
-        * Cho docker client
+        * Cho docker daemon: dịch vụ chạy ngầm cần biết proxy để có thể tải image từ Docker Hub hoặc registry khác. 
+          - Sử dụng file cấu hình trong thư muc: `/etc/systemd/system/docker.service.d/`
+          - Cach làm:
+            - Tạo thư mục: `mkdir -p /etc/systemd/system/docker.service.d`
+            - Tạo file cấu hình: `vi /etc/systemd/system/docker.service.d/http-proxy.conf`
+            - Thêm nội dung, địa chỉ proxy
+            ```
+            [Service]
+            Environment="HTTP_PROXY=http://proxy.yourcompany.com:8080"
+            Environment="HTTPS_PROXY=http://proxy.yourcompany.com:8080"
+            Environment="NO_PROXY=localhost,127.0.0.1"
+            ```
+            - Cập nhật lại cấu hình và khởi động Docker:
+            ```
+            systemctl daemon-reexec
+            systemctl daemon-reload
+            systemctl restart docker
+            ```
+            
+        * Cho docker client: Docker Client là chương trình dòng lệnh (docker) mà bạn chạy. Nó cũng cần proxy để kết nối ra Internet (ví dụ khi pull image).
+          - Tạo và sửa file `~/.docker/config.json:`
+          - Thêm phần proxy:
+            ```
+            {
+              "proxies":
+              {
+                "default":
+                {
+                  "httpProxy": "http://proxy.yourcompany.com:8080",
+                  "httpsProxy": "http://proxy.yourcompany.com:8080",
+                  "noProxy": "localhost,127.0.0.1"
+                }
+              }
+            }
+            ```
+          - Kiểm: `docker ìno` => thấy dòng HTTP Proxy và HTTPS Proxy nếu cấu hình thành công.
+          - 
     * Cấu hình trusted registry trong daemon.json tham khảo Local Repos
       - Mục đích: 
         - Thiết lập registry nội bộ để lưu giữ image Docker
