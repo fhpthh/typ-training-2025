@@ -9,7 +9,7 @@
   - Tăng hiệu suất ứng dụng
   - Triển khai khối lượng công việc nhanh hơn
 
-1. **Các loại ảo hoá và các công nghệ ảo hóa thông dụng**
+2. **Các loại ảo hoá và các công nghệ ảo hóa thông dụng**
 - Khái niệm, phân loại ảo hoá:
   - Ảo hóa toàn phần: Sử dụng trình quản lý ảo hóa (Hypervisor) giám sát tài nguyên của máy chủ vật lý và giữ cho mỗi máy chủ ảo độc lập, không bị ảnh hưởng bởi các máy chủ ảo khác. 
   - Ảo hóa bán phần: Các hệ điều hành máy ảo (Guest OS) biết rằng chúng đang chạy trong môi trường ảo, nhờ đó phối hợp với Hypervisor để quản lý tài nguyên hiệu quả hơn.
@@ -21,7 +21,7 @@
     |VMWare| Ảo hóa toàn phần|
     |Docker| Ảo hóa cấp hệ điều hành|
 
-1. **Virtual Machine**
+3. **Virtual Machine**
 - Khái niệm:  máy ảo mô phỏng máy tính vật lý, sử dụng các tài nguyên của máy tính vật lý để khởi chạy chương trình nhưng hoạt động hoàn toàn độc lập với máy tính vật lý đó.
 - Trong 1 VM, các thành phần nào có thể ảo hoá? Ảo hóa được hỗ trợ bởi Phần cứng? Ảo hoá bán phần?
   - Các thành phần cứng đều có thể được ảo hóa (CPU, RAM,ổ đĩa cứng...)
@@ -73,8 +73,8 @@
     
     * Cấu hình proxy
         * Cho docker daemon: dịch vụ chạy ngầm cần biết proxy để có thể tải image từ Docker Hub hoặc registry khác. 
-          - Sử dụng file cấu hình trong thư muc: `/etc/systemd/system/docker.service.d/`
-          - Cach làm:
+          - Sử dụng file cấu hình trong thư mục: `/etc/systemd/system/docker.service.d/`
+          - Cách làm:
             - Tạo thư mục: `mkdir -p /etc/systemd/system/docker.service.d`
             - Tạo file cấu hình: `vi /etc/systemd/system/docker.service.d/http-proxy.conf`
             - Thêm nội dung, địa chỉ proxy
@@ -107,8 +107,7 @@
               }
             }
             ```
-          - Kiểm: `docker ìno` => thấy dòng HTTP Proxy và HTTPS Proxy nếu cấu hình thành công.
-          - 
+          - Kiểm tra: `docker info` => thấy dòng HTTP Proxy và HTTPS Proxy nếu cấu hình thành công.
     * Cấu hình trusted registry trong daemon.json tham khảo Local Repos
       - Mục đích: 
         - Thiết lập registry nội bộ để lưu giữ image Docker
