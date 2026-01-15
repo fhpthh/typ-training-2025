@@ -1,4 +1,4 @@
-**1. Triển khai Kubernetes**
+# 1. Triển khai Kubernetes
 - Triển khai một Kubernetes Cluster gồm 1 Master node và 1 Worker node trên nền tảng Ubuntu 22.04.
 - Lựa chọn triển khai **K3s – Lightweight Kubernetes**
 - Mô hình hệ thống chuẩn bị:
@@ -6,7 +6,7 @@
 | Node | Vai trò | Hệ điều hành | IP |
 | :--- | :--- | :--- | :--- |
 | master1 | K3s Server  | Ubuntu 22.04 | 192.168.126.102 |
-| Worker 2 | K3S Worker | Ubuntu 22.04 | 192.168.126.100 |
+| worker | K3S Worker | Ubuntu 22.04 | 192.168.126.100 |
 
 - Cài đặt cơ bản:  
 
@@ -33,4 +33,4 @@ sudo apt install -y curl
 - Kiểm tra trạng thái: `sudo kubectl get nodes -o wide`
 
   ![alt txt](./images/bai1/result.png)
-  
+
