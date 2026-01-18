@@ -34,3 +34,36 @@ sudo apt install -y curl
 
   ![alt txt](./images/bai1/result.png)
 
+# 2. Triển khai web application sử dụng các DevOps tools & practices
+## K8S Helm Chart (1.5đ)
+**2.1. Yêu cầu 1**
+- **Cài đặt ArgoCD** lên Kubernetes Cluster, expose được qua ArgoCD qua NodePort
+  - Tạo namespace và triển khai bằng cách áp dụng các file từ chính kho lưu trưc của dự án Argi Project:
+  ```bash
+  kubectl create namespace argocd
+
+  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+  ```
+ ![alt txt](./images/argo/setup.png)
+
+  ![alt txt](./images/argo/pods.png)
+
+  - Expose qua NodePort
+  ```bash
+  kubectl patch svc argocd-server -n argocd -p '{"spec":{"type":"NodePort"}}'
+  ```
+
+   ![alt txt](./images/argo/nodeport.png)
+
+ - Lấy mật khẩu:
+ ```bash
+ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+ ```
+
+ - Kết quả:
+ ![alt txt](./images/argo/login.png)
+
+  ![alt txt](./images/argo/result.png)
+
+- **Cài đặt Jenkins** lên Kubernetes Cluster, expose được Jenkins qua NodePort
