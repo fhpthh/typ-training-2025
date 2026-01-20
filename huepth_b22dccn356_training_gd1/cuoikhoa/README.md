@@ -67,3 +67,109 @@ sudo apt install -y curl
   ![alt txt](./images/argo/result.png)
 
 - **Cài đặt Jenkins** lên Kubernetes Cluster, expose được Jenkins qua NodePort
+  - Cài đặt và triển khai:
+  
+  ```bash
+     kubectl apply -f jenkins/jenkins_namespace.yml
+  ```
+
+  ![alt](./images/jenkins/result.png)
+
+  - Lấy mật khẩu:
+  ```bash
+  kubectl exec -it jenkins-5dd88f7bf9-7vtvp -n jenkins -- cat /var/jenkins_home/secrets/initialAdminPassword
+  ```
+  ![alt](./images/jenkins/pwd.png)
+  
+  ![alt](./images/jenkins/unlock.png)
+
+  ![alt](./images/jenkins/install.png)
+
+
+**2.2. Yêu cầu 2**
+
+- **Source code & Helm Chart:** [fhcoffee_v2](https://github.com/fhpthh/fhcoffee_v2)
+- **Config Repo:** [fh-coffee-config](https://github.com/fhpthh/fh-coffee-config.git)
+
+- Cài đặt Helm Chart:
+
+  ```bash
+  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+
+  chmod 700 get_helm.sh
+
+  ./get_helm.sh
+
+  helm version 
+  ```
+
+- Khởi tạo cấu trúc
+
+  ```bash
+    mkdir -p ~/k8s-practice/cuoikhoa/fhcoffee_v2/charts
+
+    cd ~/k8s-practice/cuoikhoa/fhcoffee_v2/charts
+
+    helm create fh-coffee-chart
+  ```
+  
+- Kiểm tra các cú pháp trong heml:
+
+  ```bash
+  helm lint fh-coffee-chart/
+  helm template fh-coffee ./fh-coffee-chart
+  ```
+
+
+- File Manifest ArgoCD Application:
+  ```bash
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: fh-coffee-app
+        namespace: argocd
+      spec:
+        project: default
+        sources:
+          - repoURL: 'https://github.com/fhpthh/fhcoffee_v2.git'
+            targetRevision: HEAD
+            path: charts/fh-coffee-chart
+            helm:
+              valueFiles:
+                - $values/values-prod.yaml
+          - repoURL: 'https://github.com/fhpthh/fh-coffee-config.git'
+            targetRevision: HEAD
+            ref: values
+        destination:
+          server: 'https://kubernetes.default.svc'
+          namespace: cloud-final
+        syncPolicy:
+          automated:
+            prune: true
+            selfHeal: true
+          syncOptions:
+            - CreateNamespace=true
+  ```
+
+  - Để chạy Helm Chart: 
+  ```c
+    kubectl apply -f application.yaml
+  ```
+  **Kết quả**:
+  ![alt](./images/helmchart/heathy.png)
+
+  ![alt](./images/helmchart/detail.png)
+
+  ![alt](./images/helmchart/admin.png)
+
+## CI/CD
+
+  - Trigger:
+    - Đổi http sang https để add vào webhook trên github
+    ```c
+    ngrok http 192.168.126.100:32080
+    ```
+
+    ![alt](./images/jenkins/ngrok.png)
+
+    ![alt](./images/jenkins/webhook.png)
