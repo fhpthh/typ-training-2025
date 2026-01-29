@@ -173,3 +173,23 @@ sudo apt install -y curl
     ![alt](./images/jenkins/ngrok.png)
 
     ![alt](./images/jenkins/webhook.png)
+
+    ![alt](./images/jenkins/dockerhubbe.png)
+
+    ![alt](./images/jenkins/dockerhubfe.png)
+
+
+
+
+## Monitoring
+
+[Link github](https://github.com/fhpthh/monitoring_typ_cloud.git)
+
+- ![alt](./images/monitoring/pic3.png)
+
+- ![alt](./images/monitoring/pic1.png)
+
+- ![alt](./images/monitoring/pic2.png)
+
+Lệnh chạt dự án: `ansible-playbook -i inventory/hosts playbooks/site.yml `
+
