@@ -183,7 +183,7 @@ sudo apt install -y curl
 
 ## Monitoring
 
-[Link github](https://github.com/fhpthh/monitoring_typ_cloud.git)
+Link github: [Monitoring](https://github.com/fhpthh/monitoring_typ_cloud.git)
 
 - ![alt](./images/monitoring/pic3.png)
 
@@ -193,3 +193,13 @@ sudo apt install -y curl
 
 Lệnh chạt dự án: `ansible-playbook -i inventory/hosts playbooks/site.yml `
 
+## Logging
+Link github: [Ansible logging](https://github.com/fhpthh/logging_f[alt](./images/logging/1.png)inal_typ.git)
+
+- ![alt](./images/logging/1.png)
+
+- ![alt](./images/logging/2.png)
+
+- ![alt](./images/logging/3.png)
+
+- ![alt](./images/logging/4.png)
