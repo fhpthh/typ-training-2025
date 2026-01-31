@@ -203,3 +203,7 @@ Link github: [Ansible logging](https://github.com/fhpthh/logging_f[alt](./images
 - ![alt](./images/logging/3.png)
 
 - ![alt](./images/logging/4.png)
+
+- ![alt](./images/logging/5.png)
+
+- ![alt](./images/logging/6.png)
